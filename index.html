@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emily Camily | Filmmaker & Editor</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        :root {
+            --bg: #0a0510; 
+            --card-bg: rgba(30, 15, 50, 0.4);
+            --accent: #bc6ff1; 
+            --accent-glow: #892cdc; 
+            --text: #ffffff;
+            --text-dim: #d1c4e9;
+            --glass-border: rgba(188, 111, 241, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(circle at 50% -20%, rgba(137, 44, 220, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, rgba(188, 111, 241, 0.1) 0%, transparent 30%);
+            color: var(--text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 8%; position: fixed; width: 100%; top: 0;
+            background: rgba(10, 5, 16, 0.8); backdrop-filter: blur(15px);
+            z-index: 1000; border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo { font-weight: 800; font-size: 1.5rem; letter-spacing: 2px; }
+        .logo span { color: var(--accent); text-shadow: 0 0 15px var(--accent-glow); }
+
+        nav { display: flex; align-items: center; gap: 20px; }
+        nav a { color: #fff; text-decoration: none; font-weight: 600; font-size: 0.85rem; transition: 0.3s; }
+        nav a:hover { color: var(--accent); }
+        
+        .social-link { color: var(--accent); font-size: 1.4rem; transition: 0.3s; text-decoration: none; }
+        .social-link:hover { transform: scale(1.2); color: #fff; }
+
+        #hero {
+            height: 50vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding-top: 80px;
+        }
+
+        #hero h1 {
+            font-size: 4.5rem; margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff, var(--accent), #fff);
+            background-size: 200% auto; -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; animation: shine 3s linear infinite;
+            font-weight: 800;
+        }
+
+        .about-section {
+            padding: 100px 8%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            justify-self: center;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 30px;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 0 30px rgba(188, 111, 241, 0.2);
+        }
+
+        .about-text h2 { font-size: 2.5rem; margin-bottom: 20px; color: var(--accent); }
+        .about-text p { font-size: 1.1rem; line-height: 1.8; color: var(--text-dim); margin-bottom: 20px; }
+        .about-text .highlight { color: #fff; font-weight: 700; }
+
+        .filter-container { text-align: center; margin-bottom: 40px; }
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 10px 25px;
+            margin: 0 5px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .container { padding: 0 8% 100px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px; }
+
+        .item {
+            background: var(--card-bg); border-radius: 25px; overflow: hidden;
+            border: 1px solid var(--glass-border); backdrop-filter: blur(10px);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0; transform: translateY(50px);
+        }
+        
+        .item.reveal { opacity: 1; transform: translateY(0); }
+        .item.hide { display: none; }
+
+        .media-container { width: 100%; aspect-ratio: 16/9; background: #000; overflow: hidden; }
+        .media-container img, .media-container video { width: 100%; height: 100%; object-fit: cover; }
+
+        .item-info { padding: 25px; border-top: 1px solid var(--glass-border); }
+        .item-info h3 { font-size: 1.3rem; color: #fff; }
+
+        .budget-section { background: rgba(255,255,255,0.03); padding: 80px 8%; border-top: 1px solid var(--glass-border); }
+        .form-container { max-width: 600px; margin: 0 auto; background: var(--card-bg); padding: 40px; border-radius: 30px; border: 1px solid var(--glass-border); }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: var(--accent); font-weight: 600; }
+        input, textarea, select { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 10px; color: #fff; outline: none; }
+        .btn-submit { width: 100%; padding: 15px; background: #25d366; border: none; border-radius: 10px; color: #fff; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
+        .btn-submit:hover { background: #1da851; transform: scale(1.02); }
+
+        .admin-login-trigger { position: fixed; bottom: 20px; left: 20px; opacity: 0.3; cursor: pointer; font-size: 0.7rem; color: var(--text-dim); z-index: 999; }
+        .modal-admin { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #1a1025; padding: 40px; border-radius: 20px; z-index: 3000; border: 2px solid var(--accent); width: 95%; max-width: 600px; box-shadow: 0 0 100px rgba(0,0,0,1); max-height: 90vh; overflow-y: auto; }
+        
+        @keyframes shine { to { background-position: 200% center; } }
+        @media (max-width: 768px) { 
+            header { padding: 15px 5%; }
+            .about-section { grid-template-columns: 1fr; text-align: center; } 
+            #hero h1 { font-size: 2.8rem; } 
+            nav a:not(.social-link) { display: none; } 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">EMILY<span>CAMILY</span></div>
+        <nav>
+            <a href="#sobre">SOBRE</a>
+            <a href="#portfolio">PORTFÓLIO</a>
+            <a href="#contato">ORÇAMENTO</a>
+            <a href="https://instagram.com/emilycccamily" target="_blank" class="social-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <p style="color: var(--accent); letter-spacing: 4px; text-transform: uppercase; font-size: 0.8rem; font-weight: 700;">Filmmaker • Editor • Motion</p>
+        <h1>Creative Vision</h1>
+    </section>
+
+    <section class="about-section" id="sobre">
+        <div class="about-image">
+            <img src="perfil.jpeg" alt="Emily Camily">
+        </div>
+        <div class="about-text">
+           <h2>Olá, eu sou a Emily</h2>
+            <p>Sou apaixonada por transformar ideias em experiências visuais memoráveis. Como <span class="highlight">Filmmaker e Editora</span>, foco em criar conteúdos que não apenas contam uma história, mas transmitem uma emoção única através de movimentos, cores e ritmo.</p>
+            <p>Meu objetivo é elevar o nível visual do seu projeto. Vamos criar algo incrível?</p>
+        </div>
+    </section>
+
+    <div class="container" id="portfolio">
+        <h2 style="text-align: center; margin-bottom: 30px;">Meus Trabalhos</h2>
+        <div class="filter-container">
+            
+            <button class="filter-btn" onclick="filtrar('video')">Vídeos</button>
+            <button class="filter-btn" onclick="filtrar('foto')">Fotos</button>
+        </div>
+        <div class="grid" id="portfolio-grid"></div>
+    </div>
+
+    <section class="budget-section" id="contato">
+        <div class="form-container">
+            <h2 style="text-align: center; margin-bottom: 30px;">Solicitar Orçamento</h2>
+            <form id="whatsapp-form">
+                <div class="form-group"><label>Seu Nome</label><input type="text" id="nome" required></div>
+                <div class="form-group">
+                    <label>Tipo de Projeto</label>
+                    <select id="projeto">
+                        <option value="Edição de Vídeo">Edição de Vídeo</option>
+                        <option value="Filmmaking">Filmmaking</option>
+                        <option value="Fotos">Fotos</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Mensagem</label><textarea id="mensagem" rows="4"></textarea></div>
+                <button type="submit" class="btn-submit">Enviar para WhatsApp <i class="fab fa-whatsapp"></i></button>
+            </form>
+        </div>
+    </section>
+
+    <div class="admin-login-trigger" onclick="abrirModalLogin()">Acesso Restrito</div>
+
+    <div id="login-modal" class="modal-admin" style="text-align: center;">
+        <h3 style="color: var(--accent); margin-bottom: 20px;">Login do Dono</h3>
+        <input type="password" id="senha-input" placeholder="Senha Administrativa" style="margin-bottom: 10px;">
+        <button class="btn-submit" style="background: var(--accent);" onclick="verificarSenha()">Entrar</button>
+    </div>
+
+    <div id="admin-panel" class="modal-admin">
+        <h2 style="color: var(--accent); margin-bottom: 20px; text-align: center;">Gerenciar Portfólio</h2>
+        <div class="form-group"><label>Título</label><input type="text" id="admin-titulo"></div>
+        <div class="form-group">
+            <label>Tipo</label>
+            <select id="admin-tipo"><option value="video">Vídeo</option><option value="foto">Foto</option></select>
+        </div>
+        <div class="form-group">
+            <label>Arquivo</label>
+            <input type="file" id="admin-file" accept="video/*,image/*">
+        </div>
+        <div id="progress-container" style="display:none; background:#333; height:10px; border-radius:5px; margin-bottom:15px;">
+            <div id="progress-bar" style="background:var(--accent); width:0%; height:100%; border-radius:5px;"></div>
+        </div>
+        <button class="btn-submit" style="background: var(--accent);" id="save-btn">Publicar</button>
+        <div id="admin-manage-list" style="margin-top:20px;"></div>
+        <button onclick="fecharModais()" style="background:none; border:none; color:#aaa; width:100%; margin-top:25px; cursor:pointer;">Fechar</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyB2L8ekxaEuwt1aNgOU6trx0kUA_KmSwNw",
+          authDomain: "filmaker-9e0ae.firebaseapp.com",
+          projectId: "filmaker-9e0ae",
+          storageBucket: "filmaker-9e0ae.firebasestorage.app",
+          messagingSenderId: "29035256327",
+          appId: "1:29035256327:web:e332f249194a79850ee8a2"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // CONFIGURAÇÃO DO WHATSAPP
+        document.getElementById('whatsapp-form').onsubmit = function(e) {
+            e.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const projeto = document.getElementById('projeto').value;
+            const msg = document.getElementById('mensagem').value;
+            const telefone = "5581996913110"; // NÚMERO ATUALIZADO
+            
+            const texto = `Olá Emily! Meu nome é ${nome}. Gostaria de solicitar um orçamento para ${projeto}.%0A%0AMensagem: ${msg}`;
+            window.open(`https://api.whatsapp.com/send?phone=${telefone}&text=${texto}`, '_blank');
+        };
+
+        window.filtrar = (categoria) => {
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            if(event) event.target.classList.add('active');
+
+            const itens = document.querySelectorAll('.item');
+            itens.forEach(item => {
+                if(categoria === 'all' || item.getAttribute('data-tipo') === categoria) {
+                    item.classList.remove('hide');
+                } else {
+                    item.classList.add('hide');
+                }
+            });
+        };
+
+        async function loadPortfolio() {
+            const grid = document.getElementById('portfolio-grid');
+            const manageList = document.getElementById('admin-manage-list');
+            const q = query(collection(db, "projetos"), orderBy("timestamp", "desc"));
+            const querySnapshot = await getDocs(q);
+            grid.innerHTML = "";
+            manageList.innerHTML = "<h3>Gerenciar Itens:</h3>";
+            
+            querySnapshot.forEach((documento) => {
+                const data = documento.data();
+                const id = documento.id;
+                const card = document.createElement('div');
+                card.className = 'item reveal';
+                card.setAttribute('data-tipo', data.tipo);
+                card.innerHTML = `
+                    <div class="media-container">
+                        ${data.tipo === 'video' ? `<video src="${data.url}" muted onmouseover="this.play()" onmouseout="this.pause()" loop></video>` : `<img src="${data.url}">`}
+                    </div>
+                    <div class="item-info"><h3>${data.titulo}</h3></div>`;
+                grid.appendChild(card);
+
+                const row = document.createElement('div');
+                row.style = "display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #333";
+                row.innerHTML = `<span>${data.titulo}</span><button onclick="window.deletar('${id}','${data.url}')" style="background:red; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">Excluir</button>`;
+                manageList.appendChild(row);
+            });
+        }
+
+        window.deletar = async (id, url) => {
+            if(confirm("Deseja mesmo excluir?")) {
+                await deleteDoc(doc(db, "projetos", id));
+                try { await deleteObject(ref(storage, url)); } catch(e) {}
+                location.reload();
+            }
+        };
+
+        document.getElementById('save-btn').onclick = async () => {
+            const file = document.getElementById('admin-file').files[0];
+            const titulo = document.getElementById('admin-titulo').value;
+            const tipo = document.getElementById('admin-tipo').value;
+            if(!file || !titulo) return alert("Preencha tudo!");
+
+            const storageRef = ref(storage, `portfolio/${Date.now()}_${file.name}`);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+            document.getElementById('progress-container').style.display = 'block';
+
+            uploadTask.on('state_changed', 
+                (s) => { document.getElementById('progress-bar').style.width = (s.bytesTransferred/s.totalBytes)*100 + '%'; }, 
+                (e) => alert("Erro ao subir arquivo"), 
+                async () => {
+                    const url = await getDownloadURL(uploadTask.snapshot.ref);
+                    await addDoc(collection(db, "projetos"), { titulo, url, tipo, timestamp: serverTimestamp() });
+                    location.reload();
+                }
+            );
+        };
+
+        loadPortfolio();
+        window.abrirModalLogin = () => document.getElementById('login-modal').style.display = 'block';
+        window.fecharModais = () => { document.getElementById('login-modal').style.display = 'none'; document.getElementById('admin-panel').style.display = 'none'; };
+        window.verificarSenha = () => {
+            if(document.getElementById('senha-input').value === "2024") {
+                document.getElementById('login-modal').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+            } else { alert("Senha incorreta!"); }
+        };
+    </script>
+</body>
+</html>
