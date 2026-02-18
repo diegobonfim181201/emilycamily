@@ -82,7 +82,7 @@
             border-radius: 30px;
             border: 2px solid var(--glass-border);
             box-shadow: 0 0 30px rgba(188, 111, 241, 0.2);
-            opacity: 0; /* Começa invisível até carregar pelo script */
+            opacity: 0; 
             transition: opacity 0.5s ease;
         }
 
@@ -156,7 +156,7 @@
             <a href="#sobre">SOBRE</a>
             <a href="#portfolio">PORTFÓLIO</a>
             <a href="#contato">ORÇAMENTO</a>
-            <a href="https://instagram.com/emilycccamily" target="_blank" class="social-link">
+            <a href="https://www.instagram.com/emilyccamily/" target="_blank" class="social-link">
                 <i class="fab fa-instagram"></i>
             </a>
         </nav>
@@ -252,7 +252,7 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-        // --- ALTERAÇÃO AQUI: CARREGAR A FOTO DE PERFIL VIA FIREBASE STORAGE ---
+        // Carregar Foto do Perfil
         async function carregarFotoPerfil() {
             const perfilTag = document.getElementById('perfil-tag');
             try {
@@ -280,7 +280,6 @@
             const btns = document.querySelectorAll('.filter-btn');
             btns.forEach(btn => btn.classList.remove('active'));
             if(event) event.target.classList.add('active');
-
             const itens = document.querySelectorAll('.item');
             itens.forEach(item => {
                 if(categoria === 'all' || item.getAttribute('data-tipo') === categoria) {
@@ -311,7 +310,6 @@
                     </div>
                     <div class="item-info"><h3>${data.titulo}</h3></div>`;
                 grid.appendChild(card);
-
                 const row = document.createElement('div');
                 row.style = "display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #333";
                 row.innerHTML = `<span>${data.titulo}</span><button onclick="window.deletar('${id}','${data.url}')" style="background:red; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">Excluir</button>`;
@@ -332,11 +330,9 @@
             const titulo = document.getElementById('admin-titulo').value;
             const tipo = document.getElementById('admin-tipo').value;
             if(!file || !titulo) return alert("Preencha tudo!");
-
             const storageRef = ref(storage, `portfolio/${Date.now()}_${file.name}`);
             const uploadTask = uploadBytesResumable(storageRef, file);
             document.getElementById('progress-container').style.display = 'block';
-
             uploadTask.on('state_changed', 
                 (s) => { document.getElementById('progress-bar').style.width = (s.bytesTransferred/s.totalBytes)*100 + '%'; }, 
                 (e) => alert("Erro ao subir arquivo"), 
