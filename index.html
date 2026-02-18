@@ -82,6 +82,8 @@
             border-radius: 30px;
             border: 2px solid var(--glass-border);
             box-shadow: 0 0 30px rgba(188, 111, 241, 0.2);
+            opacity: 0; /* Começa invisível até carregar pelo script */
+            transition: opacity 0.5s ease;
         }
 
         .about-text h2 { font-size: 2.5rem; margin-bottom: 20px; color: var(--accent); }
@@ -167,7 +169,7 @@
 
     <section class="about-section" id="sobre">
         <div class="about-image">
-            <img src="perfil.jpeg" alt="Emily Camily">
+            <img id="perfil-tag" src="" alt="Emily Camily">
         </div>
         <div class="about-text">
            <h2>Olá, eu sou a Emily</h2>
@@ -179,7 +181,7 @@
     <div class="container" id="portfolio">
         <h2 style="text-align: center; margin-bottom: 30px;">Meus Trabalhos</h2>
         <div class="filter-container">
-            
+            <button class="filter-btn active" onclick="filtrar('all')">Todos</button>
             <button class="filter-btn" onclick="filtrar('video')">Vídeos</button>
             <button class="filter-btn" onclick="filtrar('foto')">Fotos</button>
         </div>
@@ -250,14 +252,26 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-        // CONFIGURAÇÃO DO WHATSAPP
+        // --- ALTERAÇÃO AQUI: CARREGAR A FOTO DE PERFIL VIA FIREBASE STORAGE ---
+        async function carregarFotoPerfil() {
+            const perfilTag = document.getElementById('perfil-tag');
+            try {
+                const url = await getDownloadURL(ref(storage, 'perfil.jpeg'));
+                perfilTag.src = url;
+                perfilTag.onload = () => perfilTag.style.opacity = "1";
+            } catch (error) {
+                console.error("Erro ao buscar perfil.jpeg:", error);
+            }
+        }
+        carregarFotoPerfil();
+
+        // WHATSAPP
         document.getElementById('whatsapp-form').onsubmit = function(e) {
             e.preventDefault();
             const nome = document.getElementById('nome').value;
             const projeto = document.getElementById('projeto').value;
             const msg = document.getElementById('mensagem').value;
-            const telefone = "5581996913110"; // NÚMERO ATUALIZADO
-            
+            const telefone = "5581996913110"; 
             const texto = `Olá Emily! Meu nome é ${nome}. Gostaria de solicitar um orçamento para ${projeto}.%0A%0AMensagem: ${msg}`;
             window.open(`https://api.whatsapp.com/send?phone=${telefone}&text=${texto}`, '_blank');
         };
@@ -335,6 +349,7 @@
         };
 
         loadPortfolio();
+
         window.abrirModalLogin = () => document.getElementById('login-modal').style.display = 'block';
         window.fecharModais = () => { document.getElementById('login-modal').style.display = 'none'; document.getElementById('admin-panel').style.display = 'none'; };
         window.verificarSenha = () => {
